@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.spinner{
+    animation:spin 1s infinite ease;
+}
+body{
+    transition:0.8s ease;
+}
+/* .table *{
+padding:1rem;
+} */
+ .table th,.table td{
+    padding:0.5rem 1rem;
+ }
+.light{
+background-color:rgb(29, 78, 216);
+}
+.dark{
+    background-color: rgb(23, 37, 84);
+}
+@keyframes spin{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(360deg);
+    }
+}
