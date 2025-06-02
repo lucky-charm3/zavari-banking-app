@@ -12,7 +12,8 @@ export default function BankProvider({children})
         title:'',
         message:null,
         isSpinning:null,
-        openModal:null
+        openModal:null,
+        mode:''
     }
 
     const[loggedUsers, setLoggedUsers]=useState(()=>{
