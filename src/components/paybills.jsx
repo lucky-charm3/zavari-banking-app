@@ -19,7 +19,7 @@ export default function PayBills()
              status:Math.random()>0.5?'FAILED':'SUCCEEDED',
              amount:matchedBill.price
            }
-      
+         
             let updatedAccounts=currentUser.accounts.map(a=>{
             if(a.name==="Main Account")
             {

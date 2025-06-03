@@ -19,7 +19,12 @@ const sendMoney=async ()=>{
         amount:parseFloat(amount)
     }
  setModal(prev=>({...prev, message:'Transferring money',isSpinning:true}));
- let realAmount=parseFloat(amount)
+ let realAmount=parseFloat(amount);
+   if(!amount||realAmount<0)
+ {
+    alert('Please input the correct amount');
+    return;
+ }
  if(realAmount>=currentUser.accounts[0].balance)
  {
     alert("Insufficient balance in the main account!");

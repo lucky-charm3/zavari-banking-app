@@ -101,7 +101,7 @@ export default function SignIn()
     >
         SIGN IN</button>
     </div>
-     <p>A new member?{' '}<Link to="register" className='underline'>Sign up</Link></p>
+     <p>A new member?{' '}<Link to="/register" className='underline'>Sign up</Link></p>
      </div>
      </div>
      {modal.openModal&&

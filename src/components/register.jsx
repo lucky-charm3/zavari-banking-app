@@ -143,7 +143,7 @@ export default function Register()
                             SIGN UP</button>
                         </div>
                         <div>
-                            <p>Already a member of Zavari?{' '}<Link to='sign-in' className='underline'>Sign in</Link></p>
+                            <p>Already a member of Zavari?{' '}<Link to='/sign-in' className='underline'>Sign in</Link></p>
                         </div>
             </div>
             </div>

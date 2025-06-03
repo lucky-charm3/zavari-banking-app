@@ -23,6 +23,11 @@ export  default function WithDraw()
     alert("Insufficient balance in the main account!");
     return;
  }
+ if(!amount||realAmount<0)
+ {
+    alert('Please input the correct amount');
+    return;
+ }
            let updatedAccounts=currentUser.accounts.map(a=>{
             if(a.name==="Main Account")
             {
