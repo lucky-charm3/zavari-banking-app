@@ -20,13 +20,16 @@ const sendMoney=async ()=>{
     }
  setModal(prev=>({...prev, message:'Transferring money',isSpinning:true}));
  let realAmount=parseFloat(amount);
-   if(!amount||realAmount<0)
- {
+ try{
+   if(!amount||realAmount<=0)
+ { 
+      setModal(prev => ({...prev,  isSpinning: false,openModal:false})); 
     alert('Please input the correct amount');
     return;
  }
  if(realAmount>=currentUser.accounts[0].balance)
  {
+      setModal(prev => ({...prev,  isSpinning: false, openModal:false})); 
     alert("Insufficient balance in the main account!");
     return;
  }  
@@ -40,7 +43,15 @@ const sendMoney=async ()=>{
            await new Promise(resolve=>setTimeout(resolve,2000))
             setModal(prev=>({...prev, message:'Money Transferred✅',isSpinning:false}));
            setCurrentUser(prev=>({...prev,transactions:[...prev.transactions,newTransaction],accounts:[...updatedAccounts]}))
-           setTimeout(()=>{setModal(prev=>({...prev,openModal:false}))},800)
+         
+}
+catch(error)
+{
+setModal(prev => ({...prev, message: error.message, isSpinning: false}));
+}
+finally{
+  setTimeout(()=>{setModal(prev=>({...prev,openModal:false}))},800)
+}
 }
 return(
     <div className='flex flex-col space-y-2'>

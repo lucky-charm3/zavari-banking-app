@@ -18,13 +18,16 @@ export  default function WithDraw()
             status:Math.random()>0.5?'FAILED':'SUCCEEDED'
         }
         let realAmount=parseFloat(amount);
+        try{
     if(realAmount>=currentUser.accounts[0].balance)
  {
+    setModal(prev => ({...prev,  isSpinning: false,openModal:false})); 
     alert("Insufficient balance in the main account!");
     return;
  }
  if(!amount||realAmount<0)
- {
+ { 
+      setModal(prev => ({...prev,  isSpinning: false, openModal:false})); 
     alert('Please input the correct amount');
     return;
  }
@@ -39,7 +42,15 @@ export  default function WithDraw()
            await new Promise(resolve=>setTimeout(resolve,2000))
             setModal(prev=>({...prev, message:'Money Withdrawed✅',isSpinning:false}));
            setCurrentUser(prev=>({...prev,transactions:[...prev.transactions,newTransaction],accounts:[...updatedAccounts]}))
-           setTimeout(()=>{setModal(prev=>({...prev,openModal:false}))},800)
+        }
+        catch(error)
+        {
+           setModal(prev => ({...prev, message: error.message, isSpinning: false})); 
+        }
+        finally{
+             setTimeout(()=>{setModal(prev=>({...prev,openModal:false}))},800)
+        }
+          
     }
     return(
         <div  className='flex flex-col space-y-2'>
