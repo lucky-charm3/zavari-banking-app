@@ -6,7 +6,7 @@ import {validations} from './validations.jsx';
 export default function Register()
 {
      const{loggedUsers, setLoggedUsers,setCurrentUser,modal,setModal}=useContext(BankContext);
-    const[formData, setFormData]=useState({name:'',pin:'',password:''});
+    const[formData, setFormData]=useState({name:'',pin:'',phoneNumber:''});
     const[isShowPassword, setIsShowPassword]=useState(false);
     const[errors, setErrors]=useState({name:'',phoneNumber:'',pin:''})
      let navigate=useNavigate();
@@ -83,9 +83,9 @@ export default function Register()
     const ok=()=>{
         if(modal.message==="✅Succesfully signed up!")
         {
-          navigate('main-page/dashboard');
+          navigate('/main-page/dashboard');
         }
-        setModal(prev=>({...prev,isOpen:false}));
+        setModal(prev=>({...prev,openModal:false}));
     }
 
     return(

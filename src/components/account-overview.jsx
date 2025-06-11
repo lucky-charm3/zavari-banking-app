@@ -6,7 +6,6 @@ export default function AccountOverview()
 {
     const{currentUser,setCurrentUser,modal, setModal}=useContext(BankContext);
     const[deleteId, setDeleteId]=useState(null);
-    const[formData,setFormData]=useState({id:crypto.randomUUID(),name:'',amount:''});
 
     useEffect(()=>{
         console.log('Full current user ',[currentUser])
@@ -16,14 +15,6 @@ export default function AccountOverview()
         }
     },[currentUser])
 
-    
-
-   
-
-    const onInputChange=(e)=>{
-     const{name,value}=e.target;
-     setFormData(prev=>({...prev,[name]:value}))
-    }
 
     const deleteAccount=async ()=>{
         try{
@@ -72,8 +63,7 @@ export default function AccountOverview()
     }
 
     const triggerAdd=()=>{
-        setModal(prev=>({...prev,openModal:true,message:<AccountForm formData={formData} setFormData={setFormData}
-            onInputChange={onInputChange}/>,mode:'Add Account'}))
+        setModal(prev=>({...prev,openModal:true,message:<AccountForm/>,mode:'Add Account'}))
     }
    
     return(
@@ -96,7 +86,9 @@ export default function AccountOverview()
             {modal.openModal&&
             <div className={modal.outer}>
                 <div className={modal.inner}>
-                    <div>{modal.message} </div>
+                    <div>
+                         {typeof modal.message === 'string' ? modal.message : modal.message}
+                         </div>
                     {modal.isSpinning&&<div className='spinner w-12 h-12 rounded-full bg-gray-400 border-t-blue-400 border-4'></div>}
                     {(!modal.isSpinning&&typeof modal.message==='string'&&modal.message.includes('Are you sure you want to delete'))&&
                     <div className='flex items-center justify-center space-x-4'>

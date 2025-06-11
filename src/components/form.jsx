@@ -1,8 +1,9 @@
-import {useContext} from 'react';
+import {useContext,useState} from 'react';
 import {BankContext} from'./context.jsx';
-export default function AccountForm({formData,onInputChange,setFormData})
+export default function AccountForm()
 {
-    const{modal,setModal,currentUser,setCurrentUser}=useContext(BankContext)
+    const{modal,setModal,currentUser,setCurrentUser}=useContext(BankContext);
+    const[formData,setFormData]=useState({id:crypto.randomUUID(),name:'',amount:''})
     const resetForm=()=>{
         setFormData({id:crypto.randomUUID(),name:'',amount:''})
     }
@@ -22,7 +23,7 @@ export default function AccountForm({formData,onInputChange,setFormData})
      {
       setModal(prev=>({...prev,openModal:true,isSpinning:true,message:'Adding account..',title:'Add Account'}))
       await new Promise(resolve=>setTimeout(resolve,2000));
-      if(formData.amount>=currentUser.accounts[0].balance)
+      if(convertedAmount>=currentUser.accounts[0].balance)
      {
         alert('You dont have enough balance in your account, top it up and try again later!');
         return;
@@ -32,11 +33,11 @@ export default function AccountForm({formData,onInputChange,setFormData})
         alert('You cannot have more than four accounts!');
         return;
      }
-     let newAccount={id:crypto.randomUUID(),name:formData.name,balance:parseFloat(formData.amount)};
+     let newAccount={id:crypto.randomUUID(),name:formData.name,balance:convertedAmount};
      let updatedAccounts=currentUser.accounts.map(a=>{
         if(a.name==='Main Account')
         {
-            return {...a,balance:a.balance-formData.amount}
+            return {...a,balance:a.balance-parseFloat(formData.amount)}
         }
         return a;
      })
@@ -50,11 +51,20 @@ export default function AccountForm({formData,onInputChange,setFormData})
      }
      finally
      {
-        setModal(prev=>({...prev,isSpinning:false,mode:''}));
+        setModal(prev=>({...prev,isSpinning:false}));
          resetForm()
        
      }
     }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     return(
         <div className='flex flex-col space-y-2'>
          <h1>Add Account</h1>
@@ -62,7 +72,7 @@ export default function AccountForm({formData,onInputChange,setFormData})
                     <label>Amount:</label>
                     <input type='number' 
                     placeholder='Amount from the main account(tshs)'
-                    onChange={onInputChange}
+                    onChange={handleInputChange}
                     value={formData.amount}
                     name='amount'
                     className='rounded-lg h-10 p-2 text-black'
@@ -72,7 +82,7 @@ export default function AccountForm({formData,onInputChange,setFormData})
                     <label>Name:</label>
                     <input type='text'
                     placeholder='name of your account'
-                    onChange={onInputChange}
+                    onChange={handleInputChange}
                     value={formData.name}
                     name='name'
                     className='rounded-lg h-10 p-2 text-black'

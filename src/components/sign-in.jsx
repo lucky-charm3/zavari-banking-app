@@ -56,7 +56,7 @@ export default function SignIn()
     const ok=()=>{
         if(modal.message==="✅Success!")
         {
-    navigate('/main-page/dashboard');
+    setTimeout(()=>navigate('/main-page/dashboard'),12);
         }
         setModal(prev=>({...prev,openModal:false,message:'Logging in'}))
     }
